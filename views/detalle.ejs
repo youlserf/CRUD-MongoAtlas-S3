@@ -1,0 +1,100 @@
+<%- include("template/cabecera", {tituloweb: 'Productos' }) %>
+
+    <div class="container">
+
+        <h1>Detalle Producto</h1>
+
+        <% if (error) { %>
+            <%= mensaje %>
+                <a href="/productos" class="btn btn-dark btn-block my-2">
+                    Volver
+                </a>
+                <% } %>
+
+                    <% if (!error) { %>
+                        <form id="editar" data-id="<%= producto.id %>">
+                            <input type="text" value="<%= producto.nombre %>" class="form-control my-2" name="nombre"
+                                id="nameInput">
+                            <input type="text" value="<%= producto.marca %>" class="form-control my-2" name="marca"
+                                id="imageInput">
+                            <input type="text" value="<%= producto.descripcion %>" class="form-control my-2"
+                                name="descripcion" id="emailInput">
+                            <input type="text" value="<%= producto.image %>" class="form-control my-2" name="image"
+                                id="last_nameInput">
+                            <input type="number" value="<%= producto.cantidad %>" class="form-control my-2"
+                                name="cantidad" id="phoneInput">
+                            <input type="number" value="<%= producto.precio %>" class="form-control my-2" name="precio"
+                                id="phoneInput">
+                            <button class="btn btn-warning btn-sm" id="editar" type="submit">
+                                Editar
+                            </button>
+                        </form>
+                        <hr>
+                        <button class="btn btn-danger btn-sm" data-id="<%= producto.id %>">
+                            Eliminar
+                        </button>
+                        <% } %>
+
+    </div>
+
+
+    <script>
+        // onclick vs addEventListener
+        // https://stackoverflow.com/questions/6348494/addeventlistener-vs-onclick#:~:text=Essentially%20onclick%20is%20a%20HTML,(using%20this%20for%20example).
+
+        const btnEliminar = document.querySelector('.btn-danger')
+        btnEliminar.addEventListener('click', async () => {
+            console.log(btnEliminar.dataset.id)
+            try {
+                // https://developer.mozilla.org/es/docs/Web/API/HTMLElement/dataset
+                const data = await fetch(`/productos/${btnEliminar.dataset.id}`, {
+                    method: 'delete'
+                })
+                const res = await data.json()
+                console.log(res)
+                if (res.estado) {
+                    window.location.href = '/productos'
+                } else {
+                    console.log(res)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        })
+
+        const formEditar = document.querySelector('#editar');
+
+        formEditar.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            // Alternativa #1 (capturar input)
+            const nombre = formEditar.elements['nombre'].value
+            // Alternativa #1 (capturar input)
+            const marca = formEditar.elements['marca'].value
+            const descripcion = formEditar.elements['descripcion'].value
+            /* const image = formEditar.elements['image'].value */
+            const cantidad = formEditar.elements['cantidad'].value
+            const precio = formEditar.elements['precio'].value
+
+            const id = formEditar.dataset.id
+
+            const data = await fetch(`/productos/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify({ nombre, marca, descripcion, cantidad, precio })
+            })
+
+            const res = await data.json()
+
+            if (res.estado) {
+                window.location.href = '/productos'
+            } else {
+                console.log(res)
+            }
+
+        })
+    </script>
+
+    <%- include("template/footer") %>

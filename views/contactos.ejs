@@ -1,0 +1,55 @@
+<%- include("template/cabecera", {tituloweb: 'productos' }) %>
+
+  <div class="container">
+    <a class="btn btn-success btn-block my-4 form-control" href="contactos/crear">
+      Crear nuevo productos
+    </a>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Email</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Telefono</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% if (arrayContactos.length> 0) { %>
+          <% arrayContactos.forEach(contacto=> { %>
+            <tr>
+              <th scope="row">
+                <%= contacto.id %>
+              </th>
+              <td>
+                <%= contacto.name %>
+              </td>
+              <td>
+                <%= contacto.image %>
+              </td>
+              <td>
+                <%= contacto.email %>
+              </td>
+              <td>
+                <%= contacto.last_name %>
+              </td>
+              <td>
+                <%= contacto.phone %>
+              </td>
+              <td>
+                <a class="btn btn-warning btn-sm" href="contactos/<%= contacto.id %>">
+                  Editar
+                </a>
+              </td>
+            </tr>
+            <% }) %>
+              <% } %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <%- include("template/footer") %>

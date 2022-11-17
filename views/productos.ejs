@@ -1,0 +1,59 @@
+<%- include("template/cabecera", {tituloweb: 'productos' }) %>
+
+  <div class="container">
+    <a class="btn btn-success btn-block my-4 form-control" href="productos/crear">
+      Crear nuevo producto
+    </a>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Marca</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Imagen</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <% if (arrayProductos.length> 0) { %>
+          <% arrayProductos.forEach(producto=> { %>
+            <tr>
+              <th scope="row">
+                <%= producto.id %>
+              </th>
+              <td>
+                <%= producto.nombre %>
+              </td>
+              <td>
+                <%= producto.marca %>
+              </td>
+              <td>
+                <%= producto.descripcion %>
+              </td>
+              <td>
+                <%= producto.image %>
+              </td>
+              <td>
+                <%= producto.cantidad %>
+              </td>
+              <td>
+                <%= producto.precio %>
+              </td>
+              <td>
+                <a class="btn btn-warning btn-sm" href="productos/<%= producto.id %>">
+                  Editar
+                </a>
+              </td>
+            </tr>
+            <% }) %>
+              <% } %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <%- include("template/footer") %>
