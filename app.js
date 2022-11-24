@@ -23,9 +23,11 @@ const port = process.env.PORT || 3000;
 
 //conexion a base de datos
 const mongoose = require("mongoose");
-const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_DB } = process.env;
+const { MONGO_USERNAME, MONGO_PASSWORD, MONGO_DB, MONGO_HOST, MONGO_PORT } =
+  process.env;
 
-const uri = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@nube.5gylyeu.mongodb.net/${MONGO_DB}`;
+const uri = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}`;
+//const uri = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@nube.5gylyeu.mongodb.net/${MONGO_DB}`;
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

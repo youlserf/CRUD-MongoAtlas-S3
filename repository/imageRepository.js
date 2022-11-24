@@ -18,7 +18,6 @@ class ImageRepository {
         Key,
         ContentType: type,
         Body: image,
-        ACL: "public-read",
       };
 
       this.s3.upload(params, (err, data) => {
